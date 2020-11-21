@@ -53,7 +53,7 @@ public class LoadRoster implements TableModelListener {
 		
 	}
 	
-	public void loadRoster() {
+	public JTable loadRoster() {
 		String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", "ASURITE"};
 		String[][] data = new String[studentList.size()][6];
 		
@@ -66,12 +66,13 @@ public class LoadRoster implements TableModelListener {
 			data[i][5] = studentList.get(i).getAsurite();
 		}
 		
-		JScrollPane pane = new JScrollPane();
 		JTable table = new JTable(data, columnNames);
 		
 		table.getModel().addTableModelListener(this);
 		
-		pane.add(table);
+		table.repaint();
+		
+		return table;
 	}
 
 	@Override

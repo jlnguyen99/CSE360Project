@@ -17,6 +17,7 @@ public class Menu implements ActionListener {
 	JMenuItem save = new JMenuItem("Save");
 	JMenuItem plot = new JMenuItem("Plot Data");
 	
+	LoadRoster roster = new LoadRoster();
 	
 	public Menu() {
 		frame.setSize(600,500);
@@ -50,7 +51,10 @@ public class Menu implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == load) {
+			roster.getRoster();
+			JScrollPane scrollPane = new JScrollPane(roster.loadRoster());
 			
+			frame.getContentPane().add(scrollPane);
 		} else if (e.getSource() == att) {
 			
 		} else if (e.getSource() == save) {

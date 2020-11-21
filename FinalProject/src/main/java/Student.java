@@ -12,6 +12,7 @@ public class Student {
 		firstName = fName;
 		lastName = lName;
 		this.program = program;
+		this.level = level;
 		this.asurite = asurite;
 	}
 	
