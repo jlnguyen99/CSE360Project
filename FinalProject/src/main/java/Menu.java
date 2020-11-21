@@ -22,7 +22,6 @@ public class Menu implements ActionListener {
 	public Menu() {
 		frame.setSize(600,500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		frame.setVisible(true);
 	
 		
 		file.add(load);
@@ -40,11 +39,15 @@ public class Menu implements ActionListener {
 		plot.addActionListener(this);
 		
 		frame.setJMenuBar(menubar);
+		
+		frame.setVisible(false);
+		frame.setVisible(true);
 	}
 	
 
 	public static void main(String args[]) {
 		Menu world = new Menu();
+		
 	}
 	
 	@Override
@@ -55,6 +58,8 @@ public class Menu implements ActionListener {
 			JScrollPane scrollPane = new JScrollPane(roster.loadRoster());
 			
 			frame.getContentPane().add(scrollPane);
+			frame.setVisible(false);
+			frame.setVisible(true);
 		} else if (e.getSource() == att) {
 			
 		} else if (e.getSource() == save) {
