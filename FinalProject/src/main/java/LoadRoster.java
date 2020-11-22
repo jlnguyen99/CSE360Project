@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 public class LoadRoster implements TableModelListener {
 	public ArrayList<Student> studentList = new ArrayList<Student>();
-	
+	public String[][] data;
+
 	public void getRoster() {
 		JFileChooser chooser = new JFileChooser();
 		
@@ -55,7 +56,7 @@ public class LoadRoster implements TableModelListener {
 	
 	public JTable loadRoster() {
 		String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", "ASURITE"};
-		String[][] data = new String[studentList.size()][6];
+		data = new String[studentList.size()][6];
 		
 		for (int i = 0; i < studentList.size(); i++) {
 			data[i][0] = studentList.get(i).getId();
