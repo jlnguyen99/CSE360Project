@@ -40,11 +40,12 @@ public class LoadRoster implements TableModelListener {
 				String lastName = inputs[2];
 				String program = inputs[3];
 				String level = inputs[4];
-				String asurite = inputs[5];
 				
-				Student student = new Student(id, firstName, lastName, program, level, asurite);
-				
-				studentList.add(student);
+				if (inputs.length == 6) {
+					String asurite = inputs[5];
+					Student student = new Student(id, firstName, lastName, program, level, asurite);
+					studentList.add(student);
+				}
 			}
 			
 			bReader.close();
