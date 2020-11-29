@@ -13,7 +13,7 @@ public class Menu implements ActionListener {
 	JMenu about = new JMenu("About");
 	
 	JMenuItem load = new JMenuItem("Load a Roster");
-	JMenuItem att = new JMenuItem("Add Attendence");
+	JMenuItem att = new JMenuItem("Add Attendance");
 	JMenuItem save = new JMenuItem("Save");
 	JMenuItem plot = new JMenuItem("Plot Data");
 	
