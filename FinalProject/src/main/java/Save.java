@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * In the case of matching save files, go for an overwrite prompt
  * 
 */
-public class Save{
+public class Save {
 	
 	// Preinitialized parameters
 	// Might not need these but I'll keep them here in case for future changes.
