@@ -59,10 +59,10 @@ public class Save implements TableModelListener{
 			for(int i = 0; i < table.getRowCount(); i++) {
 				buffWrite.newLine();
 				for(int j = 0; j < table.getColumnCount(); j++) {
-					buffWrite.append((String)table.getValueAt(i, j));
-					buffWrite.append(DEFAULT_SEPARATOR);
+					buffWrite.append(String.join(",",(CharSequence[]) table.getValueAt(i,j)));
 				}
 			}
+			
 			buffWrite.flush();
 			buffWrite.close();
 		}catch(IOException e) {
