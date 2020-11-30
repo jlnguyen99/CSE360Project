@@ -51,6 +51,20 @@ public class Save implements TableModelListener{
 			FileWriter writer = new FileWriter(fileName);
 			BufferedWriter buffWrite = new BufferedWriter(writer);
 			
+			for(int i = 0; i < table.getColumnCount(); i++) {
+				buffWrite.append(table.getColumnName(i));
+				buffWrite.append(DEFAULT_SEPARATOR);
+			}
+			
+			for(int i = 0; i < table.getRowCount(); i++) {
+				buffWrite.newLine();
+				for(int j = 0; j < table.getColumnCount(); j++) {
+					buffWrite.append((String)table.getValueAt(i, j));
+					buffWrite.append(DEFAULT_SEPARATOR);
+				}
+			}
+			buffWrite.flush();
+			buffWrite.close();
 		}catch(IOException e) {
 			System.out.println("File inaccessible, cannot be read.");
 		}
