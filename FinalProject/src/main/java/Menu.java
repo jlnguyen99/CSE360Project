@@ -1,11 +1,13 @@
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
 public class Menu implements ActionListener {
+	
 	JFrame frame = new JFrame("CSE 360 Final Project");
 	
 	JMenuBar menubar = new JMenuBar();
@@ -18,6 +20,7 @@ public class Menu implements ActionListener {
 	JMenuItem plot = new JMenuItem("Plot Data");
 	
 	LoadRoster roster = new LoadRoster();
+	AddAttendance addAttendance = new AddAttendance();
 	
 	public Menu() {
 		frame.setSize(600,500);
@@ -61,6 +64,13 @@ public class Menu implements ActionListener {
 			frame.setVisible(false);
 			frame.setVisible(true);
 		} else if (e.getSource() == att) {
+			addAttendance.chooseDate();
+			 addAttendance.addColumn();
+			 JScrollPane scrollPane = new JScrollPane(addAttendance.addColumn());
+			 
+			frame.getContentPane().add(scrollPane);
+			frame.setVisible(false);
+			frame.setVisible(true);
 			
 		} else if (e.getSource() == save) {
 			
