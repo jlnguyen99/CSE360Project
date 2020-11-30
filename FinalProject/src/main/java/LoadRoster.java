@@ -1,3 +1,12 @@
+/* 
+ * Author: Jasmine Nguyen, Gabriel Waegner, Jenny Zhang, Andrew Tran, Charis Han
+ * Class ID: 70605
+ * Final Project
+ * Description: This file contains the LoadRoster class that implements TableModelListener.
+ * 				It reads a csv file that the user selects and loads it into a JTable.
+ * 
+ */
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -15,6 +24,11 @@ public class LoadRoster implements TableModelListener {
 	public ArrayList<Student> studentList = new ArrayList<Student>();
 	public String[][] data;
 
+	/**
+	 * Opens a JFileChooser window to allow the user to pick a csv file with the roster.
+	 * Reads the data in the cvs file and puts it into the studentList. Ignores any rows
+	 * with no asurite.
+	 */
 	public void getRoster() {
 		JFileChooser chooser = new JFileChooser();
 		
@@ -55,6 +69,10 @@ public class LoadRoster implements TableModelListener {
 		
 	}
 	
+	/**
+	 * Loads the data from the studentList into a table and returns the table
+	 * @return table, the JTable holding the data from the roster in table form
+	 */
 	public JTable loadRoster() {
 		String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", "ASURITE"};
 		data = new String[studentList.size()][6];
