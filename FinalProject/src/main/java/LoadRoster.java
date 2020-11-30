@@ -95,6 +95,14 @@ public class LoadRoster implements TableModelListener {
 		return table;
 	}
 
+	/**
+	 * Returns the data array for the roster
+	 * @return data, the 2D array holding the roster data
+	 */
+	public String[][] getData() {
+		return data;
+	}
+	
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		// TODO Auto-generated method stub
