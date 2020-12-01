@@ -44,7 +44,7 @@ public class Save {
 	
 	// Function to save the file.
 	// The parameters are place-holders currently, fix later.
-	public void saveFile(JTable table) throws IOException{
+	public void saveFile(String[][] studentList, String[] columnNames) throws IOException{
 		JFileChooser selection = new JFileChooser();
 		selection.setDialogTitle("Specify file for saving data.");
 		
@@ -68,14 +68,15 @@ public class Save {
 				FileWriter writer = new FileWriter(fileCreate.getAbsoluteFile());
 				BufferedWriter buffWrite = new BufferedWriter(writer);
 				
-				for(int i = 0; i < table.getColumnCount(); i++) {
-					buffWrite.append(String.join(",",table.getColumnName(i)));
+				for(int i = 0; i < columnNames.length; i++) {
+					buffWrite.append(String.join(",", columnNames[i]));
 				}
 				
-				for(int i = 0; i < table.getRowCount(); i++) {
-					buffWrite.newLine();
-					for(int j = 0; j < table.getColumnCount(); j++) {
-						buffWrite.append(String.join(",",(CharSequence[]) table.getValueAt(i,j)));
+				
+				for(int i = 0; i < studentList.length; i++) {
+					buffWrite.append("\n");
+					for(int j = 0; j < studentList.length; j++) {
+						buffWrite.append(String.join(",", studentList[i][j]));
 					}
 				}
 				
