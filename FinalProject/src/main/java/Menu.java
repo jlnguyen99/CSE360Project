@@ -1,3 +1,13 @@
+/* 
+ * Author: Jasmine Nguyen, Gabriel Waegner, Jenny Zhang, Andrew Tran, Charis Han
+ * Class ID: 70605
+ * Final Project
+ * Description: This file is the Menu, creating the menu interface for the program.
+ * 					The menu consists of a blank screen with About and File options.
+ * 					Under File is multiple buttons for various functions.
+ * 					Under About is an about the team description placed in a dialogue box.
+ * 
+ */
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -14,7 +24,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-
+/**
+ * Menu class creates the framework required to view the program.
+ * Framework includes the buttons, the interface, and the table for viewing recorded data.
+ * @author Gabriel Waegner
+ *
+ */
 public class Menu implements ActionListener {
 	JFrame frame = new JFrame("CSE 360 Final Project");
 	
@@ -36,6 +51,13 @@ public class Menu implements ActionListener {
 	
 	Save saveFunction;
 	
+	/**
+	 * Menu constructor creates the base menu for the program.
+	 * This menu allows users to view the about or interact with various buttons.
+	 * The function of the buttons are described under actionPerformed.
+	 * The about button's function is described under the AboutEvent class.
+	 * @author Gabriel Waegner
+	 */
 	public Menu() {
 		frame.setSize(600,500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -63,11 +85,24 @@ public class Menu implements ActionListener {
 	}
 	
 
+	/**
+	 * Default main, creates a new menu to initialize the program.
+	 * @param args
+	 * @author Gabriel Waegner
+	 */
 	public static void main(String args[]) {
 		Menu world = new Menu();
 		
 	}
 	
+	/**
+	 * ActionPerformed directs actions based on which button is clicked.
+	 * Load is directed by Jasmine Nguyen, performs loading a roster from a .CSV file onto a table.
+	 * Attendance is directed by Jenny Zhang, adding attendance records from a .CSV file onto a table.
+	 * Save is directed by Andrew Tran, saving the table records into a .CSV file of the user's choice.
+	 * Plot Data is directed by Gabriel Waegner, creating a scatter plot of the data received from the table.
+	 * @author Gabriel Waegner, Jasmine Nguyen, Andrew Tran, Jenny Zhang, Charis Han
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -138,7 +173,12 @@ public class Menu implements ActionListener {
 	}
 
 
-
+/**
+ * AboutEvent class, when selected in function, shows the contributors to the project.
+ * A dialogue box is generated displaying the information of all team members.
+ * @author Gabriel Waegner
+ *
+ */
 	class AboutEvent implements MenuListener {
 		@Override
 		public void menuSelected(MenuEvent e) {
@@ -158,11 +198,17 @@ public class Menu implements ActionListener {
 			d.setVisible(true);
 		}
 	
+		/**
+		 * Automatically generated function for when the box is dismissed.
+		 */
 		@Override
 		public void menuDeselected(MenuEvent e) {
 			// TODO Auto-generated method stub
 		}
 	
+		/**
+		 * Automatically generated function for when the box is cancelled.
+		 */
 		@Override
 		public void menuCanceled(MenuEvent e) {
 			// TODO Auto-generated method stub
