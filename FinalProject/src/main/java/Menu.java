@@ -148,7 +148,7 @@ public class Menu implements ActionListener {
 						if (m == k) {
 							
 						} else {
-							if (val > plotL.get(m)) {
+							if (val >= plotL.get(m)) {
 								counter++;
 							}
 						}
@@ -159,7 +159,7 @@ public class Menu implements ActionListener {
 				dataset.addSeries(x);
 			}
 			
-			JFreeChart chart = ChartFactory.createScatterPlot(" ", "X-Axis", "Count", dataset);
+			JFreeChart chart = ChartFactory.createScatterPlot(" ", "% of Lecture Attended", "Number of Students", dataset);
 			XYPlot plot = (XYPlot)chart.getPlot();  
 		    plot.setBackgroundPaint(new Color(255,228,196));
 		    
