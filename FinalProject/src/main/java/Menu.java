@@ -17,8 +17,8 @@ public class Menu implements ActionListener {
 	JMenuItem save = new JMenuItem("Save");
 	JMenuItem plot = new JMenuItem("Plot Data");
 	
-	LoadRoster roster = new LoadRoster();
-	JScrollPane scrollPane;
+	LoadRoster roster;
+	JScrollPane scrollPane = new JScrollPane();
 	String[][] data;
 	String[] columnNames;
 	
@@ -44,6 +44,7 @@ public class Menu implements ActionListener {
 		plot.addActionListener(this);
 		
 		frame.setJMenuBar(menubar);
+		frame.getContentPane().add(scrollPane);
 		
 		frame.setVisible(false);
 		frame.setVisible(true);
@@ -59,20 +60,24 @@ public class Menu implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == load) {
-			roster.getRoster();
-			scrollPane = new JScrollPane(roster.loadRoster());
-			data = roster.getData();
-			columnNames = roster.getColumnNames();
+			roster = new LoadRoster();
 			
-			frame.getContentPane().add(scrollPane);
-			frame.setVisible(false);
-			frame.setVisible(true);
+			if (roster.getRoster() == true) {
+				scrollPane.setViewportView(roster.loadRoster());
+				data = roster.getData();
+				columnNames = roster.getColumnNames();
+
+				frame.setVisible(false);
+				frame.setVisible(true);
+			}
 		} else if (e.getSource() == att) {
 			System.out.println(data[0][0]);
 			
 			attendance.chooseDate();
 			attendance.chooseFile(frame);
 			scrollPane.setViewportView(attendance.addColumn(data, columnNames));
+			data = attendance.getData();
+			columnNames = attendance.getColumnNames();
 
 			frame.setVisible(false);
 			frame.setVisible(true);

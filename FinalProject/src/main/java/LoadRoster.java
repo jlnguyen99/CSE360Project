@@ -29,14 +29,16 @@ public class LoadRoster {
 	 * Reads the data in the cvs file and puts it into the studentList. Ignores any rows
 	 * with no asurite.
 	 */
-	public void getRoster() {
+	public boolean getRoster() {
 		JFileChooser chooser = new JFileChooser();
 		
 		FileFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
 		
 		chooser.setFileFilter(filter);
 		
-		chooser.showOpenDialog(null);
+		if (chooser.showOpenDialog(null) == JFileChooser.CANCEL_OPTION) {
+			return false;
+		}
 		
 		File csvFile = chooser.getSelectedFile();
 		
@@ -67,6 +69,7 @@ public class LoadRoster {
 			System.out.println("Can't read file");
 		}
 		
+		return true;
 	}
 	
 	/**
