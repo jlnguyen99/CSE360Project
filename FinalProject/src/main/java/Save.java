@@ -11,12 +11,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-//import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-//import java.util.ArrayList;
 
 /* Save should be similar to load attendance, at least for exporting
  * Import FileReader is swapped with FileWriter
@@ -32,19 +30,12 @@ import java.io.IOException;
 */
 public class Save {
 	
-	// Preinitialized parameters
-	// Might not need these but I'll keep them here in case for future changes.
-	// Commented out unless a future change requires these variables.
-	/*
-	public ArrayList<Student> studentList = new ArrayList<Student>();
-	public String[][] streamData;
-	public String[] columnName;
-	*/
 	public Save() {}
 	
 	// Function to save the file.
-	// The parameters are place-holders currently, fix later.
 	public void saveFile(String[][] studentList, String[] columnNames) throws IOException{
+		
+		// Select a file to begin saving process.
 		JFileChooser selection = new JFileChooser();
 		selection.setDialogTitle("Specify file for saving data.");
 		
@@ -55,12 +46,12 @@ public class Save {
 		
 		int userInput = selection.showSaveDialog(null);
 		
-		//String fileName = selection.getSelectedFile().getName();
-		
+		// If file is chosen, attempt to write data to file.
 		if(userInput == JFileChooser.APPROVE_OPTION) {
 			try {
 				File fileCreate = selection.getSelectedFile();
 				
+				// Creates a new file if one does not exist.
 				if(!fileCreate.exists()) {
 					fileCreate.createNewFile();
 				}
@@ -68,6 +59,7 @@ public class Save {
 				FileWriter writer = new FileWriter(fileCreate.getAbsoluteFile());
 				BufferedWriter buffWrite = new BufferedWriter(writer);
 				
+				// Begin writing process to file
 				for(int i = 0; i < columnNames.length; i++) {
 					buffWrite.append(String.join(",", columnNames[i]));
 				}
@@ -82,7 +74,7 @@ public class Save {
 				
 				buffWrite.flush();
 				buffWrite.close();
-			}catch(IOException e) {
+			}catch(IOException e) { // Exception for inaccessible files.
 				System.out.println("File inaccessible, cannot be read.");
 			}
 			
