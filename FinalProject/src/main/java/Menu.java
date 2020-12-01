@@ -18,6 +18,11 @@ public class Menu implements ActionListener {
 	JMenuItem plot = new JMenuItem("Plot Data");
 	
 	LoadRoster roster = new LoadRoster();
+	JScrollPane scrollPane;
+	String[][] data;
+	String[] columnNames;
+	
+	AddAttendance attendance = new AddAttendance();
 	
 	public Menu() {
 		frame.setSize(600,500);
@@ -55,13 +60,22 @@ public class Menu implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource() == load) {
 			roster.getRoster();
-			JScrollPane scrollPane = new JScrollPane(roster.loadRoster());
+			scrollPane = new JScrollPane(roster.loadRoster());
+			data = roster.getData();
+			columnNames = roster.getColumnNames();
 			
 			frame.getContentPane().add(scrollPane);
 			frame.setVisible(false);
 			frame.setVisible(true);
 		} else if (e.getSource() == att) {
+			System.out.println(data[0][0]);
 			
+			attendance.chooseDate();
+			attendance.chooseFile(frame);
+			scrollPane.setViewportView(attendance.addColumn(data, columnNames));
+
+			frame.setVisible(false);
+			frame.setVisible(true);
 		} else if (e.getSource() == save) {
 			
 		} else if (e.getSource() == plot) {

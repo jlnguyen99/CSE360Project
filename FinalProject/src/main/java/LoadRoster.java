@@ -8,11 +8,9 @@
  */
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,9 +18,11 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
-public class LoadRoster implements TableModelListener {
+public class LoadRoster {
 	public ArrayList<Student> studentList = new ArrayList<Student>();
 	public String[][] data;
+	public DefaultTableModel model = new DefaultTableModel();
+	public String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", "ASURITE"};
 
 	/**
 	 * Opens a JFileChooser window to allow the user to pick a csv file with the roster.
@@ -74,7 +74,6 @@ public class LoadRoster implements TableModelListener {
 	 * @return table, the JTable holding the data from the roster in table form
 	 */
 	public JTable loadRoster() {
-		String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", "ASURITE"};
 		data = new String[studentList.size()][6];
 		
 		for (int i = 0; i < studentList.size(); i++) {
@@ -86,9 +85,18 @@ public class LoadRoster implements TableModelListener {
 			data[i][5] = studentList.get(i).getAsurite();
 		}
 		
-		JTable table = new JTable(data, columnNames);
+		JTable table = new JTable(model);
 		
-		table.getModel().addTableModelListener(this);
+		model.addColumn("ID");
+		model.addColumn("First Name");
+		model.addColumn("Last Name");
+		model.addColumn("Program");
+		model.addColumn("Level");
+		model.addColumn("ASURITE");
+		
+		for (int i = 0; i < studentList.size(); i++) {
+			model.addRow(data[i]);
+		}
 		
 		table.repaint();
 		
@@ -103,9 +111,11 @@ public class LoadRoster implements TableModelListener {
 		return data;
 	}
 	
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		// TODO Auto-generated method stub
-		TableModel model = (TableModel)e.getSource();
+	/**
+	 * Returns the array holding the column Names for the roster
+	 * @return columnNames, the array holding the column names for the roster
+	 */
+	public String[] getColumnNames() {
+		return columnNames;
 	}
 }
