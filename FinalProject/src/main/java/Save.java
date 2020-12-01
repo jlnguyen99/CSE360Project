@@ -11,12 +11,12 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.io.*;
+//import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 /* Save should be similar to load attendance, at least for exporting
  * Import FileReader is swapped with FileWriter
@@ -34,9 +34,12 @@ public class Save {
 	
 	// Preinitialized parameters
 	// Might not need these but I'll keep them here in case for future changes.
+	// Commented out unless a future change requires these variables.
+	/*
 	public ArrayList<Student> studentList = new ArrayList<Student>();
 	public String[][] streamData;
 	public String[] columnName;
+	*/
 	public Save() {}
 	
 	// Function to save the file.
@@ -56,7 +59,13 @@ public class Save {
 		
 		if(userInput == JFileChooser.APPROVE_OPTION) {
 			try {
-				FileWriter writer = new FileWriter(fileName);
+				File fileCreate = new File(fileName);
+				
+				if(!fileCreate.exists()) {
+					fileCreate.createNewFile();
+				}
+				
+				FileWriter writer = new FileWriter(fileCreate.getAbsoluteFile());
 				BufferedWriter buffWrite = new BufferedWriter(writer);
 				
 				for(int i = 0; i < table.getColumnCount(); i++) {
