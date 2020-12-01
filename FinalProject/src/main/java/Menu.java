@@ -34,6 +34,7 @@ public class Menu implements ActionListener {
 	
 	AddAttendance attendance = new AddAttendance();
 	
+	Save saveFunction;
 	
 	public Menu() {
 		frame.setSize(600,500);
@@ -91,7 +92,8 @@ public class Menu implements ActionListener {
 			frame.setVisible(false);
 			frame.setVisible(true);
 		} else if (e.getSource() == save) {
-			
+			saveFunction = new Save();
+			saveFunction.saveFile(data, columnNames);
 		} else if (e.getSource() == plot) {
 			String[][] temp = attendance.getData();
 			JFrame frame = new JFrame("CSE 360 Final Project");
