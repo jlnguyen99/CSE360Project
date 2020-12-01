@@ -55,11 +55,11 @@ public class Save {
 		
 		int userInput = selection.showSaveDialog(null);
 		
-		String fileName = selection.getSelectedFile().getName();
+		//String fileName = selection.getSelectedFile().getName();
 		
 		if(userInput == JFileChooser.APPROVE_OPTION) {
 			try {
-				File fileCreate = new File(fileName);
+				File fileCreate = selection.getSelectedFile();
 				
 				if(!fileCreate.exists()) {
 					fileCreate.createNewFile();
