@@ -1,34 +1,22 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Properties;
 import java.awt.Frame;
 import java.io.BufferedReader;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.text.DateFormatter;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import org.jdatepicker.impl.*;
-import org.jdatepicker.util.*;
-import org.jdatepicker.*;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-
-public class AddAttendance implements TableModelListener {
+public class AddAttendance {
 	public ArrayList<Attendance> attendanceList = new ArrayList<Attendance>();
 	public ArrayList<Student> studentList = new ArrayList<Student>();
 	String stringDate;
 	
+	public String[] columnNames;
 	public String[][] data;
 	
 	static class Attendance{
@@ -85,67 +73,64 @@ public class AddAttendance implements TableModelListener {
 	}
 	
 	public void chooseFile(Frame frame) {
-	JFileChooser chooser = new JFileChooser();
-	File csvFile = null;
-	
-	ArrayList<Attendance> asuriteNotFound = new ArrayList<Attendance>();
-	int totalAsuriteEntered = 0;
-	
-	FileFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
-	chooser.setFileFilter(filter);
-	int correctFile = chooser.showOpenDialog(null);
-	
-	if(correctFile == JFileChooser.APPROVE_OPTION) {
-		csvFile = chooser.getSelectedFile();
+		JFileChooser chooser = new JFileChooser();
+		File csvFile = null;
 		
-	try {
-		FileReader fReader = new FileReader(csvFile);
-		BufferedReader bReader = new BufferedReader(fReader);
+		ArrayList<Attendance> asuriteNotFound = new ArrayList<Attendance>();
+		int totalAsuriteEntered = 0;
 		
-		String line = bReader.readLine();
+		FileFilter filter = new FileNameExtensionFilter("CSV Files", "csv");
+		chooser.setFileFilter(filter);
+		int correctFile = chooser.showOpenDialog(null);
 		
-		while (line != null) {
-			String[] attendance = line.split(",");
+		if(correctFile == JFileChooser.APPROVE_OPTION) {
+			csvFile = chooser.getSelectedFile();
 			
-			Attendance attendanceInfo = new Attendance(attendance[0], Integer.parseInt(attendance[1]));
-			
-			attendanceList.add(attendanceInfo);
-			
-			line = bReader.readLine();
-			
-			if(!returnAsurite(attendanceInfo.getAsurite())) {
-				asuriteNotFound.add(attendanceInfo);
-			}
-				else {
-					totalAsuriteEntered++;
+			try {
+				FileReader fReader = new FileReader(csvFile);
+				BufferedReader bReader = new BufferedReader(fReader);
 				
+				String line = bReader.readLine();
+				
+				while (line != null) {
+					String[] attendance = line.split(",");
+					
+					Attendance attendanceInfo = new Attendance(attendance[0], Integer.parseInt(attendance[1]));
+					
+					attendanceList.add(attendanceInfo);
+					
+					line = bReader.readLine();
+					
+					if(!returnAsurite(attendanceInfo.getAsurite())) {
+						asuriteNotFound.add(attendanceInfo);
+					}
+					else {
+						totalAsuriteEntered++;
+					
+					}
 				}
+				
+				if (asuriteNotFound.size() != 0) {
+			    	JDialog d = new JDialog(frame, "Not Found");
+			   	 	String dialogue = "Data loaded for" + totalAsuriteEntered;
+			   	 	dialogue += " users in the roster.";
+			   	 	dialogue += "\n" + asuriteNotFound.size() + " additional attendee was found: \n";
+			    	for (Attendance att : asuriteNotFound) {
+			    		dialogue += "\n" + att.getAsurite() + " connected for " + att.getMinutes() + " minutes.";
+			    	}
+			    	JLabel l = new JLabel(dialogue)	;
+			    	d.add(l);
+				}		
+				
+				bReader.close();
+			} catch (IOException ioe) {
+				System.out.println("Can't read file");
 			}
-		if (asuriteNotFound.size() != 0) {
-	    	JDialog d = new JDialog(frame, "Not Found");
-	   	 String dialogue = "Data loaded for" + totalAsuriteEntered;
-		 dialogue += " users in the roster.";
-	     dialogue += "\n" + asuriteNotFound.size() + " additional attendee was found: \n";
-	    	for (Attendance att : asuriteNotFound) {
-	    		dialogue += "\n" + att.getAsurite() + " connected for " + att.getMinutes() + " minutes.";
-	    	}
-	    JLabel l = new JLabel(dialogue)	;
-	    d.add(l);
-		}
-				
-				
 		
-		bReader.close();
-	} catch (IOException ioe) {
-		System.out.println("Can't read file");
+		}
+		    
 	}
 	
-		}
-	    
-	    
-	   
-
-	}
 	public void chooseDate() {
 		String[] monthList = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 		Integer[] dayList = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
@@ -171,36 +156,56 @@ public class AddAttendance implements TableModelListener {
 		}
 	}
 		
-		public JTable addColumn() {
-			
-			LoadRoster loadRoster = new LoadRoster();
-			String [][] copyData = loadRoster.getData();
-		
-			String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Level", stringDate, };
-			
+	public JTable addColumn(String[][] data, String[] columnNames) {
+		String[] newColumn = new String[attendanceList.size()];
 		
 		for (int i = 0; i < attendanceList.size(); i++) {
-			copyData[i][6] = attendanceList.get(i).getMinutes();
-			
+			newColumn[i] = attendanceList.get(i).getMinutes();
 		}
-		JTable table = new JTable(copyData, columnNames);
 		
-		table.getModel().addTableModelListener(this);
+		DefaultTableModel model = new DefaultTableModel();
+		JTable table = new JTable(model);
+		
+		for (int i = 0; i < columnNames.length; i++) {
+			model.addColumn(columnNames[i]);
+		}
+		
+		for (int i = 0; i < data.length; i++) {
+			model.addRow(data[i]);
+		}
+		
+		model.addColumn(stringDate, newColumn);
 		
 		table.repaint();
 		
-		return table;
+		this.data = new String[model.getRowCount()][model.getColumnCount()];
+		
+		for (int i = 0; i < model.getRowCount(); i++) {
+			for (int j = 0; j < model.getColumnCount() - 1; j++) {
+				this.data[i][j] = data[i][j];
+			}
+			
+			this.data[i][model.getColumnCount() - 1] = newColumn[i];
 		}
 		
-
-	
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		// TODO Auto-generated method stub
-		TableModel model = (TableModel)e.getSource();
+		this.columnNames = new String[model.getColumnCount()];
+		
+		for (int i = 0; i < model.getColumnCount() - 1; i++) {
+			this.columnNames[i] = columnNames[i];
+		}
+		
+		this.columnNames[model.getColumnCount() - 1] = stringDate;
+		
+		return table;
 	}
-
-
+	
+	public String[][] getData() {
+		return data;
+	}
+	
+	public String[] getColumnNames() {
+		return columnNames;
+	}
 
 }
 
