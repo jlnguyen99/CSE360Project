@@ -113,7 +113,7 @@ public class Menu implements ActionListener {
 						if (m == k) {
 							
 						} else {
-							if (val > plotL.get(m)) {
+							if (val >= plotL.get(m)) {
 								counter++;
 							}
 						}
