@@ -86,7 +86,7 @@ public class Menu implements ActionListener {
 	
 
 	/**
-	 * Default main, creates a new menu to initialize the program.
+	 * Default main constructor creates a menu to view program.
 	 * @param args
 	 * @author Gabriel Waegner
 	 */
