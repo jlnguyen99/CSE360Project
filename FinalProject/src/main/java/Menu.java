@@ -1,8 +1,18 @@
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 
 public class Menu implements ActionListener {
@@ -23,6 +33,7 @@ public class Menu implements ActionListener {
 	String[] columnNames;
 	
 	AddAttendance attendance = new AddAttendance();
+	
 	
 	public Menu() {
 		frame.setSize(600,500);
@@ -70,9 +81,7 @@ public class Menu implements ActionListener {
 				frame.setVisible(false);
 				frame.setVisible(true);
 			}
-		} else if (e.getSource() == att) {
-			System.out.println(data[0][0]);
-			
+		} else if (e.getSource() == att) {			
 			attendance.chooseDate();
 			attendance.chooseFile(frame);
 			scrollPane.setViewportView(attendance.addColumn(data, columnNames));
@@ -84,6 +93,49 @@ public class Menu implements ActionListener {
 		} else if (e.getSource() == save) {
 			
 		} else if (e.getSource() == plot) {
+			String[][] temp = attendance.getData();
+			JFrame frame = new JFrame("CSE 360 Final Project");
+			XYSeriesCollection dataset = new XYSeriesCollection(); 
+			for (int i = 6; i < columnNames.length; i++) {
+				LinkedList<Double> plotL = new LinkedList<Double>();
+				System.out.println(columnNames[i]);
+				XYSeries x = new XYSeries("Nov 3");
+				try {
+					for (int j = 0; temp[j][i] != null; j++) {
+						plotL.add(Double.parseDouble(temp[j][i])/75);
+					}
+				} catch (ArrayIndexOutOfBoundsException ee) {
+					
+				}
+					
+				for (int k = 0; k < plotL.size(); k++) {
+					double val = plotL.get(k);
+					if (val > 1) {val = 1;}
+					int counter = 1;
+					for (int m = 0; m < plotL.size(); m++) {
+						if (m == k) {
+							
+						} else {
+							if (val > plotL.get(m)) {
+								counter++;
+							}
+						}
+					}
+					System.out.println(val);
+					x.add(val, counter);
+				}
+				dataset.addSeries(x);
+			}
+			
+			JFreeChart chart = ChartFactory.createScatterPlot(" ", "X-Axis", "Count", dataset);
+			XYPlot plot = (XYPlot)chart.getPlot();  
+		    plot.setBackgroundPaint(new Color(255,228,196));
+		    
+		    ChartPanel jfreeChartPanel = new ChartPanel(chart);
+		    frame.setSize(800,600);
+		    frame.add(jfreeChartPanel);
+		    frame.setVisible(true);
+
 			
 		}
 	}
