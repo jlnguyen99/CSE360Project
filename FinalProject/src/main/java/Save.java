@@ -30,9 +30,19 @@ import java.io.IOException;
 */
 public class Save {
 	
+	/**
+	 * Default class constructor
+	 */
 	public Save() {}
 	
 	// Function to save the file.
+	/**
+	 * SaveFile function saves the data provided from parameters into a .CSV file.
+	 * The function first writes the headers, then the data for students.
+	 * @param studentList, information for students based on pre-existing headers
+	 * @param columnNames, the headers for information on the JTable
+	 * @throws IOException, catches incorrect or illegally-accessed files.
+	 */
 	public void saveFile(String[][] studentList, String[] columnNames) throws IOException{
 		
 		// Select a file to begin saving process.
