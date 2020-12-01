@@ -100,8 +100,7 @@ public class Menu implements ActionListener {
 			XYSeriesCollection dataset = new XYSeriesCollection(); 
 			for (int i = 6; i < columnNames.length; i++) {
 				LinkedList<Double> plotL = new LinkedList<Double>();
-				System.out.println(columnNames[i]);
-				XYSeries x = new XYSeries("Nov 3");
+				XYSeries x = new XYSeries(columnNames[i]);
 				try {
 					for (int j = 0; temp[j][i] != null; j++) {
 						plotL.add(Double.parseDouble(temp[j][i])/75);
