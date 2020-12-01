@@ -158,7 +158,7 @@ public class Menu implements ActionListener {
 			
 			
 			d.add(l);
-			d.setSize(260, 220);
+			d.setSize(260, 280);
 			d.setVisible(true);
 		}
 	
