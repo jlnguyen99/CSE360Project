@@ -100,15 +100,11 @@ public class Menu implements ActionListener {
 			XYSeriesCollection dataset = new XYSeriesCollection(); 
 			for (int i = 6; i < columnNames.length; i++) {
 				LinkedList<Double> plotL = new LinkedList<Double>();
+				System.out.println(columnNames[i]);
 				XYSeries x = new XYSeries(columnNames[i]);
-				try {
-					for (int j = 0; temp[j][i] != null; j++) {
-						plotL.add(Double.parseDouble(temp[j][i])/75);
-					}
-				} catch (ArrayIndexOutOfBoundsException ee) {
-					
-				}
-					
+				for (int j = 0; j < temp.length; j++) {
+					plotL.add(Double.parseDouble(temp[j][i])/75);
+				}	
 				for (int k = 0; k < plotL.size(); k++) {
 					double val = plotL.get(k);
 					if (val > 1) {val = 1;}
